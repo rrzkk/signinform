@@ -1,0 +1,77 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+$darkbg: #237cbf;
+$darktext: black;
+$lighttext: white;
+$disabled: #c0c0c0;
+
+@mixin center {
+  justify-content: center;
+  align-items: center;
+}
+@mixin flexrow {
+  display: flex;
+  flex-direction: row;
+}
+@mixin flexcolumn {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+}
+@mixin inputelement {
+  margin-top: 10px;
+  border-color: $disabled;
+  border-style: solid;
+  border-width: 0.3mm;
+  border-radius: 7px;
+}
+
+.container {
+  min-height: 100vh;
+  @include flexrow;
+  @include center;
+  .pageleft {
+    flex: 3;
+    @include flexcolumn;
+    @include center;
+    a {
+      color: $darkbg;
+      text-decoration: none;
+    }
+  }
+  .pageright {
+    background-color: $darkbg;
+    color: $lighttext;
+    flex: 1;
+    padding: 5%;
+    @include flexcolumn;
+    @include center;
+  }
+}
+
+.inputform {
+  @include flexcolumn;
+  margin-left: 25%;
+  width: 50%;
+  form {
+    @include flexcolumn;
+    input {
+      @include inputelement;
+      height: 25px;
+    }
+    select {
+      @include inputelement;
+      height: 30px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  
+}
