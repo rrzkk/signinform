@@ -14,3 +14,5 @@ export const USERTYPE = [
       label: "commercial",
     },
   ];
+export const PRIMARYBUTTON={backgroundColor:"#237cbf",color:"white"}
+export const DISABLEBUTTON={backgroundColor:"#c0c0c0",color:"grey"}

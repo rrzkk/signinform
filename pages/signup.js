@@ -7,7 +7,8 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
-
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Button from '@material-ui/core/Button';
 import React from "react";
 import Link from "next/link";
 
@@ -21,6 +22,7 @@ export default function Signup() {
     userType: "",
     password: "",
     showPassword: false,
+    showEmail:true,
     nameTest: false,
     emailTest: false,
     passwordTest: false
@@ -42,13 +44,19 @@ export default function Signup() {
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
+  const handleClickShowEmail=()=>{
+    setValues({ ...values, showEmail: !values.showEmail });
+  }
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
   let emailFormat = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
   let emailError = (!emailFormat.test(values.email))&&values.emailTest;
   let nameError=(values.name.length<4||values.name.length>20)&&values.nameTest;
   let passworError=(values.password.length<8||values.password.length>20)&&values.passwordTest;
+  let readyToSubmit=values.emailTest&&values.nameTest&&values.passwordTest&&!emailError && !nameError && !passworError;
+  
   return (
     <div className="container">
       <div className="pageleft">
@@ -70,16 +78,33 @@ export default function Signup() {
               helperText={nameError ? "Name cannot be too short or too long" : ""}
               error={nameError}
             />
-            <TextField
-              style={{ marginBottom: "20px" }}
-              label="Email address"
-              value={values.email}
-              variant="outlined"
-              onChange={handleEmail}
-              name="email"
-              helperText={emailError ? "Please enter a valid email address" : ""}
-              error={emailError}
-            />
+            
+             <FormControl variant="outlined" style={{ marginBottom: "20px" }}>
+              <InputLabel htmlFor="outlined-adornment-password">
+                Email address
+              </InputLabel>
+              <OutlinedInput
+                label="Email address"
+                value={values.email}
+                type={values.showEmail ? "text" : "password"}
+                onChange={handleEmail}
+                name="email"
+                error={emailError}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowEmail}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showEmail ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                labelWidth={70}
+              />
+              {emailError&&<FormHelperText error={emailError}>PLease enter a valid email</FormHelperText>}
+            </FormControl>
             <TextField
               style={{ marginBottom: "20px" }}
               select
@@ -99,7 +124,6 @@ export default function Signup() {
                 Password
               </InputLabel>
               <OutlinedInput
-                
                 label="Password"
                 type={values.showPassword ? "text" : "password"}
                 value={values.password}
@@ -118,8 +142,9 @@ export default function Signup() {
                 }
                 labelWidth={70}
               />
-              <p className="notice">Miminum 8 characters</p>
+              <FormHelperText error={passworError}>Miminum 8 characters</FormHelperText>
             </FormControl>
+            <Button style={readyToSubmit?constant.PRIMARYBUTTON:constant.DISABLEBUTTON} disabled={!readyToSubmit}>Next</Button>
           </form>
           <p>
             By clicking the "Next" button, you agree to creating a free account,
