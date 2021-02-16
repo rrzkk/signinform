@@ -9,26 +9,41 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 
 import Pageright from "./components/pageright";
 import * as constant from "../contants/contant";
 
-export default function Signup() {
+import { connect } from 'react-redux';
+import {addUser} from '../redux/ActionCreators'
+
+
+const mapStateToProps = state => {
+  return {
+    name: state.signup.name,
+    email: state.signup.email,
+    userType: state.signup.userType,
+    password: state.signup.password
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  addUser:(user)=>dispatch(addUser(user))
+})
+
+function Signup(props) {
   const [values, setValues] = React.useState({
-    name: "",
-    email: "",
-    userType: "",
-    password: "",
+    name: props.name,
+    email: props.email,
+    userType: props.userType,
+    password: props.password,
     showPassword: false,
     showEmail:true,
     nameTest: false,
     emailTest: false,
     passwordTest: false
   });
-
-
   const handleUsername = (event) => {
     setValues({ ...values, name: event.target.value, nameTest:true });
   };
@@ -144,7 +159,9 @@ export default function Signup() {
               />
               <FormHelperText error={passworError}>Miminum 8 characters</FormHelperText>
             </FormControl>
-            <Button style={readyToSubmit?constant.PRIMARYBUTTON:constant.DISABLEBUTTON} disabled={!readyToSubmit}>Next</Button>
+            <Button style={readyToSubmit?constant.PRIMARYBUTTON:constant.DISABLEBUTTON} 
+            disabled={!readyToSubmit}
+            onClick={()=>props.addUser([values.name,values.email,values.userType,values.password])}>Next</Button>
           </form>
           <p>
             By clicking the "Next" button, you agree to creating a free account,
@@ -159,3 +176,5 @@ export default function Signup() {
     </div>
   );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
