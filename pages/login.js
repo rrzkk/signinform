@@ -12,11 +12,11 @@ export default function Login() {
       </Head>
 
       <div className="pageleft">
+        <p>Superhero not open to sign up</p>
         <Link href="/">
-          <a>sign up --</a>
+          <a>back to log in</a>
         </Link>
       </div>
-
       <Pageright/>
     </div>
   );
