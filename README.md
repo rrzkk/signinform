@@ -1,5 +1,5 @@
 # Sign in form
-This is a React.js(with Redux) project, served as a static sign up website. It implements with MaterialUI, being able to route to log in page, with validation for all the input box
+This is a React.js(with SCSS and Redux) project, served as a static sign up website. It implements with MaterialUI, being able to route to log in page, with validation for all the input box
 
 
 ## Installation
