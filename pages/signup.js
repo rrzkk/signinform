@@ -4,7 +4,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import OutlinedInput from "@material-ui/core/Input";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 
@@ -17,9 +17,24 @@ import * as constant from "../contants/contant";
 
 export default function Signup() {
   const [values, setValues] = React.useState({
-    amount: "",
-    showPassword: false,
+    name: "",
+    email:"",
+    userType:"",
+    password:"",
+    showPassword: false
   });
+  const handleUsername= (event) => {
+    setValues({ ...values, name: event.target.value})
+  };
+  const handleEmail= (event) => {
+    setValues({ ...values, email: event.target.value})
+  };
+  const handleUserType= (event) => {
+    setValues({ ...values, userType: event.target.value})
+  };
+  const handlePassword= (event) => {
+    setValues({ ...values, password: event.target.value})
+  };
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
@@ -42,17 +57,23 @@ export default function Signup() {
               style={{ marginBottom: "20px" }}
               label="Your name"
               variant="outlined"
+              value={values.name}
+              onChange={handleUsername}
             />
             <TextField
               style={{ marginBottom: "20px" }}
               label="Email address"
+              value={values.email}
               variant="outlined"
+              onChange={handleEmail}
             />
             <TextField
               style={{ marginBottom: "20px" }}
               select
               label="I would describe my user type as"
               variant="outlined"
+              value={values.userType}
+              onChange={handleUserType}
             >
               {constant.USERTYPE.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -70,6 +91,8 @@ export default function Signup() {
                 style={{ marginBottom: "20px" }}
                 label="Password"
                 type={values.showPassword ? "text" : "password"}
+                value={values.password}
+                onChange={handlePassword}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -81,6 +104,7 @@ export default function Signup() {
                     </IconButton>
                   </InputAdornment>
                 }
+                labelWidth={70}
               />
             </FormControl>
           </form>
